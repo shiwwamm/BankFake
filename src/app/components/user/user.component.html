@@ -1,0 +1,21 @@
+<h2>User Screen</h2>
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (user of users; track $index) {
+            <tr>
+                <td>{{user.userId}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phoneNumber}}</td>
+            </tr>
+        }
+    </tbody>
+</table>
