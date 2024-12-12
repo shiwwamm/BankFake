@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using FakeBank.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace FakeBank.Controllers
 
 
         [HttpGet]
+        //[Authorize]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var users = await _context.Users.Select(u => new UserDTO
