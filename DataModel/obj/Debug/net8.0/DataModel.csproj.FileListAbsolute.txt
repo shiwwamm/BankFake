@@ -14,3 +14,4 @@ C:\Users\pk401440\Desktop\Developer\FakeBank\DataModel\bin\Debug\net8.0\appsetti
 C:\Users\pk401440\Desktop\Developer\FakeBank\DataModel\bin\Debug\net8.0\DataModel.runtimeconfig.json
 C:\Users\pk401440\Desktop\Developer\FakeBank\DataModel\obj\Debug\net8.0\DataModel.csproj.AssemblyReference.cache
 C:\Users\pk401440\Desktop\Developer\FakeBank\DataModel\obj\Debug\net8.0\DataModel.genruntimeconfig.cache
+C:\Users\pk401440\Desktop\Developer\FakeBank\DataModel\obj\Debug\net8.0\DataModel.sourcelink.json
