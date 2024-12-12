@@ -1,0 +1,13 @@
+account_id,user_id,username,email,phone_number,account_number,balance
+1,1,orrgato,orrgato@gmail.com,9876789876,12345,10000
+7,1,orrgato,orrgato@gmail.com,9876789876,54321,9999
+2,2,shayy,shay@yayay.yay,1232321456,98789,5000
+3,3,steeltitan,steel.titan@email.com,9694684027,84027,999
+8,3,steeltitan,steel.titan@email.com,9694684027,84022,12362
+4,4,frozenGun,frozen.gun@email.com,5713731763,31763,65402
+10,4,frozenGun,frozen.gun@email.com,5713731763,31555,76555
+11,4,frozenGun,frozen.gun@email.com,5713731763,30435,2452
+5,5,ironmerk,iron.merk@emails.com,2598531766,12467,9864
+9,5,ironmerk,iron.merk@emails.com,2598531766,76523,256
+12,5,ironmerk,iron.merk@emails.com,2598531766,65237,74573
+6,6,turbo,turbo@email.com,7087472630,84536,7652
