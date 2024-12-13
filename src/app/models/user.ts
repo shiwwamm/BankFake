@@ -5,3 +5,9 @@ export interface User {
 	phoneNumber: string;
   }
   
+  export interface UpdateUserDTO {
+	username: string;
+	email: string;
+	phoneNumber: string;
+  }
+  

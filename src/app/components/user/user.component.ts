@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user';
+import { UpdateUserDTO, User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 
@@ -39,12 +39,26 @@ export class UserComponent implements OnInit {
 
   updateUser(): void {
     if (this.editingUser) {
-      this.userService.updateUser(this.editingUser).subscribe(() => {
+      const updateUserDto: UpdateUserDTO = {
+        username: this.editingUser.username,
+        email: this.editingUser.email,
+        phoneNumber: this.editingUser.phoneNumber,
+      };
+      this.userService.updateUser(this.editingUser.userId, updateUserDto).subscribe(() => {
         this.loadUsers();
         this.editingUser = null;
       });
     }
   }
+
+  // updateUser(): void {
+  //   if (this.editingUser) {
+  //     this.userService.updateUser(this.editingUser).subscribe(() => {
+  //       this.loadUsers();
+  //       this.editingUser = null;
+  //     });
+  //   }
+  // }
 
   deleteUser(id: number): void {
     this.userService.deleteUser(id).subscribe(() => this.loadUsers());

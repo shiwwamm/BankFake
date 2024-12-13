@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
+import { UpdateUserDTO, User } from '../models/user';
 import { environment } from '../environment/environment.development';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class UserService {
     return this.http.post<User>(`${environment.baseUrl}/api/user`, user);
   }
 
-  updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`${environment.baseUrl}/api/user`, user);
+  updateUser(id: number, updateUserDto: UpdateUserDTO): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/api/user/${id}`, updateUserDto);
   }
 
   deleteUser(id: number): Observable<void> {
