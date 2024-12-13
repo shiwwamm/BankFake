@@ -1,1 +1,41 @@
-<p>account works!</p>
+<div>
+	<h2>Account Management</h2>
+  
+	<!-- Add Account Form -->
+	<form (ngSubmit)="addAccount()">
+	  <!-- <input [(ngModel)]="newAccount.userId" name="userId" placeholder="User ID" required /> -->
+
+	  <select [(ngModel)]="newAccount.userId" name="userId" required>
+		@for (id of userIds; track $index) {
+		<option [value]="id">{{ id }}</option>
+		}
+	  </select>
+
+	  <input [(ngModel)]="newAccount.accountNumber" name="accountNumber" placeholder="Account Number" required />
+	  <input [(ngModel)]="newAccount.balance" name="balance" placeholder="Balance" type="number" required />
+	  <button type="submit">Add Account</button>
+	</form>
+  
+	<!-- Edit Account Form -->
+	 @if (editingAccount) {
+		<div>
+		<h3>Edit Account</h3>
+		<form (ngSubmit)="updateAccount()">
+			<input [(ngModel)]="editingAccount.userId" name="userId" placeholder="User ID" required />
+			<input [(ngModel)]="editingAccount.accountNumber" name="accountNumber" placeholder="Account Number" required />
+			<input [(ngModel)]="editingAccount.balance" name="balance" placeholder="Balance" type="number" required />
+			<button type="submit">Update Account</button>
+			<button type="button" (click)="editingAccount = null">Cancel</button>
+		</form>
+		</div>
+	}
+  
+	<!-- Account List -->
+	<!-- <ul>
+	  <li *ngFor="let account of accounts">
+		User ID: {{ account.userId }}, Account Number: {{ account.accountNumber }}, Balance: {{ account.balance }}
+		<button (click)="editAccount(account)">Edit</button>
+		<button (click)="deleteAccount(account.id)">Delete</button>
+	  </li>
+	</ul> -->
+  </div>

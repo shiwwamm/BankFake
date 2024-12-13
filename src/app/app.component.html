@@ -1,4 +1,15 @@
-<div class="container">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
-</div>
+<mat-toolbar>
+  <span>Fake Bank: Trust me Bro!</span>
+</mat-toolbar>
+
+<mat-drawer-container class="content-container">
+  <mat-drawer mode="side" opened="true" class="sidebar">
+    <app-navbar></app-navbar>
+  </mat-drawer>
+  <mat-drawer-content class="main-content">
+
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+  <!-- <router-outlet></router-outlet> -->

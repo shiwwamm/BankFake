@@ -1,4 +1,37 @@
-<h2>User Screen</h2>
+<div>
+    <h2>User Management</h2>
+  
+    <!-- Add User Form -->
+    <form (ngSubmit)="addUser()">
+      <input [(ngModel)]="newUser.username" name="name" placeholder="Name" required />
+      <input [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
+      <input [(ngModel)]="newUser.phone" name="phone" placeholder="Phone" required />
+      <button type="submit">Add User</button>
+    </form>
+  
+    <!-- Edit User Form -->
+     @if (editingUser) {
+    <div>
+      <h3>Edit User</h3>
+      <form (ngSubmit)="updateUser()">
+        <input [(ngModel)]="editingUser.username" name="name" placeholder="Name" required />
+        <input [(ngModel)]="editingUser.email" name="email" placeholder="Email" required />
+        <input [(ngModel)]="editingUser.phone" name="phone" placeholder="Phone" required />
+        <button type="submit">Update User</button>
+        <button type="button" (click)="editingUser = null">Cancel</button>
+      </form>
+    </div>
+    }
+  
+    <!-- User List -->
+    <!-- <ul>
+      <li *ngFor="let user of users">
+        {{ user.name }} - {{ user.email }} - {{ user.phone }}
+        <button (click)="editUser(user)">Edit</button>
+        <button (click)="deleteUser(user.id)">Delete</button>
+      </li>
+    </ul> -->
+  </div>
 <table>
     <thead>
         <tr>
@@ -11,10 +44,12 @@
     <tbody>
         @for (user of users; track $index) {
             <tr>
-                <td>{{user.userId}}</td>
+                <td>{{user.id}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.phoneNumber}}</td>
+                <td>{{user.phone}}</td>
+                <button (click)="editUser(user)">Edit</button>
+                <button (click)="deleteUser(user.id)">Delete</button>
             </tr>
         }
     </tbody>
