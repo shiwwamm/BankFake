@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen( options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
-        Title = "Auth Demo",
+        Title = "Bank Fake: Trust me bro!",
         Version = "v1"
     });
 

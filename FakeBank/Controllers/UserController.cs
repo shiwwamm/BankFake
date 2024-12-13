@@ -34,6 +34,13 @@ namespace FakeBank.Controllers
             return Ok(users);
         }
 
+        [HttpGet("ids")]
+        public async Task<ActionResult<IEnumerable<int>>> GetUserIds()
+        {
+            var userIds = await _context.Users.Select(u => u.UserId).ToListAsync();
+            return Ok(userIds);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FakeBank")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22f48d97dfb2784588946e4fbe820bb15f99ccef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffaa83dc64a6b2fe3cb19fda75311560f0fa93e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("FakeBank")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FakeBank")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

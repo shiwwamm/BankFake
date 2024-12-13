@@ -3,6 +3,8 @@ using FakeBank.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Transactions;
+using Transaction = DataModel.Transaction;
 
 namespace FakeBank.Controllers
 {
@@ -10,49 +12,57 @@ namespace FakeBank.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-            private readonly FakeBankDbContext _context;
+        private readonly FakeBankDbContext _context;
+        private readonly ILogger<TransactionController> _logger;
 
-            public TransactionController(FakeBankDbContext context)
+        public TransactionController(FakeBankDbContext context, ILogger<TransactionController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetTransactions()
+        {
+            var transactions = await _context.Transactions.Select(t => new TransactionDTO
             {
-                _context = context;
-            }
+                TransactionId = t.TransactionId,
+                Amount = t.Amount,
+                FromAccountId = t.FromAccountId,
+                ToAccountId = t.ToAccountId
+            }).ToListAsync();
 
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetTransactions()
+            return Ok(transactions);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TransactionDTO>> PostTransaction(CreateTransactionDTO createTransactionDto)
+        {
+            using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+            try
             {
-                var transactions = await _context.Transactions.Select(t => new TransactionDTO
-                {
-                    TransactionId = t.TransactionId,
-                    Amount = t.Amount,
-                    FromAccountId = t.FromAccountId,
-                    ToAccountId = t.ToAccountId
-                }).ToListAsync();
+                var senderAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == createTransactionDto.FromAccountId);
+                var receiverAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == createTransactionDto.ToAccountId);
 
-                return Ok(transactions);
-            }
-
-            [HttpGet("{id}")]
-            public async Task<ActionResult<TransactionDTO>> GetTransaction(int id)
-            {
-                var transaction = await _context.Transactions.Select(t => new TransactionDTO
+                if (senderAccount == null || receiverAccount == null)
                 {
-                    TransactionId = t.TransactionId,
-                    Amount = t.Amount,
-                    FromAccountId = t.FromAccountId,
-                    ToAccountId = t.ToAccountId
-                }).FirstOrDefaultAsync(t => t.TransactionId == id);
-
-                if (transaction == null)
-                {
-                    return NotFound();
+                    _logger.LogWarning("Invalid account details provided.");
+                    return BadRequest("Sender or Receiver account does not exist.");
                 }
 
-                return Ok(transaction);
-            }
+                if (senderAccount.Balance < createTransactionDto.Amount)
+                {
+                    _logger.LogWarning("Insufficient balance for transaction.");
+                    return BadRequest("Insufficient balance in the sender's account.");
+                }
 
-            [HttpPost]
-            public async Task<ActionResult<TransactionDTO>> PostTransaction(CreateTransactionDTO createTransactionDto)
-            {
+                // Deduct from sender
+                senderAccount.Balance -= createTransactionDto.Amount;
+
+                // Add to receiver
+                receiverAccount.Balance += createTransactionDto.Amount;
+
                 var transaction = new Transaction
                 {
                     Amount = createTransactionDto.Amount,
@@ -63,6 +73,8 @@ namespace FakeBank.Controllers
                 _context.Transactions.Add(transaction);
                 await _context.SaveChangesAsync();
 
+                transactionScope.Complete();
+
                 var transactionDto = new TransactionDTO
                 {
                     TransactionId = transaction.TransactionId,
@@ -71,27 +83,13 @@ namespace FakeBank.Controllers
                     ToAccountId = transaction.ToAccountId
                 };
 
-                return CreatedAtAction(nameof(GetTransaction), new { id = transaction.TransactionId }, transactionDto);
+                return CreatedAtAction(nameof(GetTransactions), new { id = transaction.TransactionId }, transactionDto);
             }
-
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteTransaction(int id)
+            catch (Exception ex)
             {
-                var transaction = await _context.Transactions.FindAsync(id);
-                if (transaction == null)
-                {
-                    return NotFound();
-                }
-
-                _context.Transactions.Remove(transaction);
-                await _context.SaveChangesAsync();
-
-                return NoContent();
+                _logger.LogError(ex, "An error occurred while processing the transaction.");
+                return StatusCode(500, "An error occurred while processing the transaction.");
             }
-
-            private bool TransactionExists(int id)
-            {
-                return _context.Transactions.Any(e => e.TransactionId == id);
-            }
+        }
     }
 }
