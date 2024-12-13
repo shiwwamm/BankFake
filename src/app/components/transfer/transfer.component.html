@@ -1,1 +1,72 @@
-<p>transfer works!</p>
+<div>
+	<h2>Transaction Management</h2>
+  
+	<!-- Add Transaction Form -->
+	<form (ngSubmit)="addTransaction()">
+	  <label for="fromAccountId">Sender</label>
+	  <select
+		id="fromAccountId"
+		[(ngModel)]="newTransaction.fromAccountId"
+		name="fromAccountId"
+		(change)="onSenderChange()"
+		required
+	  >
+		@for (account of accounts; track $index) {
+		<option [value]="account.accountId">
+		  {{ account.accountId }}
+		</option>
+		}
+	  </select>
+
+	  @if (senderDetails) {
+	  <div>
+		<p>Sender Username: {{ senderDetails.userId }}</p>
+		<p>Sender Balance: {{ senderDetails.balance }}</p>
+	  </div>
+	}
+  
+	  <label for="toAccountId">Receiver</label>
+	  <select
+		id="toAccountId"
+		[(ngModel)]="newTransaction.toAccountId"
+		name="toAccountId"
+		(change)="onReceiverChange()"
+		required
+	  >
+	  @for (account of accounts; track $index) {
+		<option [value]="account.accountId">
+		  {{ account.accountId }}
+		</option>
+	}
+	  </select>
+	  @if (receiverDetails) {
+	  <div>
+		<p>Receiver Username: {{ receiverDetails.userId }}</p>
+		<p>Receiver Balance: {{ receiverDetails.balance }}</p>
+	  </div>
+	}
+  
+	  <label for="amount">Amount</label>
+	  <input
+		id="amount"
+		type="number"
+		[(ngModel)]="newTransaction.amount"
+		name="amount"
+		required
+	  />
+  
+	  <button type="submit">Make Transaction</button>
+	</form>
+  
+	<!-- Transaction List -->
+	<h3>All Transactions</h3>
+	<ul>
+		@for (transaction of transactions; track $index) {
+	  <li>
+		Transaction ID: {{ transaction.transactionId }}, From: {{ transaction.fromAccountId }},
+		To: {{ transaction.toAccountId }}, Amount: {{ transaction.amount }}
+	  </li>
+	}
+	</ul>
+  </div>
+  
