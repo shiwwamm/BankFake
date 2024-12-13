@@ -30,6 +30,6 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.baseUrl}/api/user`);
+    return this.http.delete<void>(`${environment.baseUrl}/api/user/${id}`);
   }
 }
