@@ -32,6 +32,6 @@ export class AccountService {
   }
 
   getUserIds(): Observable<number[]> {
-    return this.http.get<number[]>(`${environment.baseUrl}/api/user`);
+    return this.http.get<number[]>(`${environment.baseUrl}/api/userids`);
   }
 }

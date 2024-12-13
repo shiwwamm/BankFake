@@ -45,8 +45,6 @@ export class AccountComponent implements OnInit{
   updateAccount(): void {
     if (this.editingAccount) {
       const updateAccountDto: UpdateAccountDTO = {
-        userId: this.editingAccount.userId,
-        accountNumber: this.editingAccount.accountNumber,
         balance: this.editingAccount.balance,
       };
       this.accountService.updateAccount(this.editingAccount.accountId,updateAccountDto ).subscribe(() => {

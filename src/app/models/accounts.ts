@@ -6,6 +6,12 @@ export interface Account {
   }
 
   export interface UpdateAccountDTO {
+	// userId: number;
+	// accountNumber: string;
+	balance: number;
+  }
+
+  export interface NewAccountDTO {
 	userId: number;
 	accountNumber: string;
 	balance: number;
