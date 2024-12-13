@@ -1,5 +1,10 @@
 <mat-toolbar>
   <span>Fake Bank: Trust me Bro!</span>
+  @if (!authService.isLoggedIn()) {
+  <a routerLink="/login">Login</a>
+  } @else {
+    <button><a (click)="authService.logout()">Logout</a></button>
+  }
 </mat-toolbar>
 
 <mat-drawer-container class="content-container">

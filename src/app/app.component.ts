@@ -4,6 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,4 +15,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 })
 export class AppComponent {
   title = 'BankFake';
+  constructor(public authService: AuthService) {}
+
 }
