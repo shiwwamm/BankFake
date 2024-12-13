@@ -5,7 +5,7 @@
     <form (ngSubmit)="addUser()">
       <input [(ngModel)]="newUser.username" name="name" placeholder="Name" required />
       <input [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
-      <input [(ngModel)]="newUser.phone" name="phone" placeholder="Phone" required />
+      <input [(ngModel)]="newUser.phoneNumber" name="phone" placeholder="Phone" required />
       <button type="submit">Add User</button>
     </form>
   
@@ -16,7 +16,7 @@
       <form (ngSubmit)="updateUser()">
         <input [(ngModel)]="editingUser.username" name="name" placeholder="Name" required />
         <input [(ngModel)]="editingUser.email" name="email" placeholder="Email" required />
-        <input [(ngModel)]="editingUser.phone" name="phone" placeholder="Phone" required />
+        <input [(ngModel)]="editingUser.phoneNumber" name="phone" placeholder="Phone" required />
         <button type="submit">Update User</button>
         <button type="button" (click)="editingUser = null">Cancel</button>
       </form>
@@ -44,12 +44,12 @@
     <tbody>
         @for (user of users; track $index) {
             <tr>
-                <td>{{user.id}}</td>
+                <td>{{user.userId}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.phone}}</td>
+                <td>{{user.phoneNumber}}</td>
                 <button (click)="editUser(user)">Edit</button>
-                <button (click)="deleteUser(user.id)">Delete</button>
+                <button (click)="deleteUser(user.userId)">Delete</button>
             </tr>
         }
     </tbody>

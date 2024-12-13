@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class UserComponent implements OnInit {
 
   public users: User[] = [];
-  public newUser: User = { id: 0, username: '', email: '', phone: '' };
+  public newUser: User = { userId: 0, username: '', email: '', phoneNumber: '' };
   public editingUser: User | null = null;
 
   constructor(private userService: UserService) {}
@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
   addUser(): void {
     this.userService.addUser(this.newUser).subscribe(() => {
       this.loadUsers();
-      this.newUser = { id: 0, username: '', email: '', phone: '' };
+      this.newUser = { userId: 0, username: '', email: '', phoneNumber: '' };
     });
   }
 
