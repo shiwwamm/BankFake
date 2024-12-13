@@ -8,7 +8,7 @@
 		id="fromAccountId"
 		[(ngModel)]="newTransaction.fromAccountId"
 		name="fromAccountId"
-		(change)="onSenderChange()"
+		(change)="onSenderChange(newTransaction.fromAccountId)"
 		required
 	  >
 		@for (account of accounts; track $index) {
@@ -16,11 +16,10 @@
 		  {{ account.accountId }}
 		</option>
 		}
-	  </select>
-
+	</select>
 	  @if (senderDetails) {
 	  <div>
-		<p>Sender Username: {{ senderDetails.userId }}</p>
+		<p>Sender id: {{ senderDetails.userId }}</p>
 		<p>Sender Balance: {{ senderDetails.balance }}</p>
 	  </div>
 	}
@@ -30,7 +29,7 @@
 		id="toAccountId"
 		[(ngModel)]="newTransaction.toAccountId"
 		name="toAccountId"
-		(change)="onReceiverChange()"
+		(change)="onReceiverChange(newTransaction.toAccountId)"
 		required
 	  >
 	  @for (account of accounts; track $index) {
@@ -41,7 +40,7 @@
 	  </select>
 	  @if (receiverDetails) {
 	  <div>
-		<p>Receiver Username: {{ receiverDetails.userId }}</p>
+		<p>Receiver id: {{ receiverDetails.userId }}</p>
 		<p>Receiver Balance: {{ receiverDetails.balance }}</p>
 	  </div>
 	}

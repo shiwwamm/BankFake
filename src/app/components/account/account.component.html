@@ -4,7 +4,7 @@
 	<!-- Add Account Form -->
 	<form (ngSubmit)="addAccount()">
 	  <!-- <input [(ngModel)]="newAccount.userId" name="userId" placeholder="User ID" required /> -->
-
+	  <label for="userId">User Id:</label>
 	  <select [(ngModel)]="newAccount.userId" name="userId" required>
 		@for (id of userIds; track $index) {
 		<option [value]="id">{{ id }}</option>

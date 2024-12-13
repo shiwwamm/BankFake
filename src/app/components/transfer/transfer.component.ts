@@ -36,16 +36,24 @@ export class TransferComponent implements OnInit{
     this.accountService.getAccounts().subscribe((data) => (this.accounts = data));
   }
 
-  onSenderChange(): void {
-    this.senderDetails = this.accounts.find(
-      (account) => account.accountId === this.newTransaction.fromAccountId
-    ) || null;
+  onSenderChange(sid: number): void {
+    if(sid){
+    this.accountService.getAccountById(sid).subscribe((data) => {
+      this.senderDetails = data;
+    });
+  } else {
+    this.senderDetails = null;
+  }
   }
 
-  onReceiverChange(): void {
-    this.receiverDetails = this.accounts.find(
-      (account) => account.accountId === this.newTransaction.toAccountId
-    ) || null;
+  onReceiverChange(rid: number): void {
+    if(rid){
+    this.accountService.getAccountById(rid).subscribe((data) => {
+      this.receiverDetails = data;
+    });
+  } else {
+    this.receiverDetails = null;
+  }
   }
 
   addTransaction(): void {
