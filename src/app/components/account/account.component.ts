@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from '../../models/accounts';
+import { Account, UpdateAccountDTO } from '../../models/accounts';
 import { AccountService } from '../../services/account.service';
 import { FormsModule } from '@angular/forms';
 
@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit{
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe((data) => (this.accounts = data));
   }
-  
+
   loadUserIds(): void {
     this.accountService.getUserIds().subscribe((data) => (this.userIds = data));
   }
@@ -44,7 +44,12 @@ export class AccountComponent implements OnInit{
 
   updateAccount(): void {
     if (this.editingAccount) {
-      this.accountService.updateAccount(this.editingAccount).subscribe(() => {
+      const updateAccountDto: UpdateAccountDTO = {
+        userId: this.editingAccount.userId,
+        accountNumber: this.editingAccount.accountNumber,
+        balance: this.editingAccount.balance,
+      };
+      this.accountService.updateAccount(this.editingAccount.accountId,updateAccountDto ).subscribe(() => {
         this.loadAccounts();
         this.editingAccount = null;
       });

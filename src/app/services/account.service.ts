@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Account } from '../models/accounts';
+import { Account, UpdateAccountDTO } from '../models/accounts';
 import { environment } from '../environment/environment.development';
 
 @Injectable({
@@ -16,15 +16,15 @@ export class AccountService {
   }
 
   getAccountById(id: number): Observable<Account> {
-    return this.http.get<Account>(`${environment.baseUrl}/api/account`);
+    return this.http.get<Account>(`${environment.baseUrl}/api/account/${id}`);
   }
 
   addAccount(account: Account): Observable<Account> {
     return this.http.post<Account>(`${environment.baseUrl}/api/account`, account);
   }
 
-  updateAccount(account: Account): Observable<Account> {
-    return this.http.put<Account>(`${environment.baseUrl}/api/account`, account);
+  updateAccount(id: number, updateAccountDto: UpdateAccountDTO): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/api/account/${id}`, updateAccountDto);
   }
 
   deleteAccount(id: number): Observable<void> {

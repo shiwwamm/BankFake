@@ -31,11 +31,13 @@
 	}
   
 	<!-- Account List -->
-	<!-- <ul>
-	  <li *ngFor="let account of accounts">
+	<ul>
+		@for (account of accounts; track $index) {
+	  <li>
 		User ID: {{ account.userId }}, Account Number: {{ account.accountNumber }}, Balance: {{ account.balance }}
 		<button (click)="editAccount(account)">Edit</button>
-		<button (click)="deleteAccount(account.id)">Delete</button>
+		<button (click)="deleteAccount(account.accountId)">Delete</button>
 	  </li>
-	</ul> -->
+	}
+	</ul>
   </div>
