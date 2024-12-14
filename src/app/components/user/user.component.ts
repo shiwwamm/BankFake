@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
   public users: User[] = [];
   public newUser: User = { userId: 0, username: '', email: '', phoneNumber: '' };
   public editingUser: User | null = null;
-  public userAccounts: Account[] = [];
+  public userAccounts: Account[] | null = null;
   public selectedUser: User | null = null;
 
   constructor(private userService: UserService, private accountService: AccountService) {}

@@ -16,7 +16,7 @@ export class AccountService {
   }
 
   getAccountsByUserId(id: number): Observable<Account[]> {
-    return this.http.get<Account[]>(`${environment.baseUrl}/api/account/user/${id}`);
+    return this.http.get<Account[]>(`${environment.baseUrl}/api/account/useraccounts/${id}`);
   }
 
   getAccountById(id: number): Observable<Account> {
