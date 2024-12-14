@@ -13,7 +13,7 @@
 	  >
 		@for (account of accounts; track $index) {
 		<option [value]="account.accountId">
-		  {{ account.accountId }}
+		  {{ account.accountNumber }}
 		</option>
 		}
 	</select>
@@ -34,7 +34,7 @@
 	  >
 	  @for (account of accounts; track $index) {
 		<option [value]="account.accountId">
-		  {{ account.accountId }}
+		  {{ account.accountNumber }}
 		</option>
 	}
 	  </select>
