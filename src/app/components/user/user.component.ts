@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UpdateUserDTO, User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from '../../services/account.service';
+import { Account } from '../../models/accounts';
 
 @Component({
   selector: 'app-user',
@@ -15,8 +17,10 @@ export class UserComponent implements OnInit {
   public users: User[] = [];
   public newUser: User = { userId: 0, username: '', email: '', phoneNumber: '' };
   public editingUser: User | null = null;
+  public userAccounts: Account[] = [];
+  public selectedUser: User | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -51,25 +55,16 @@ export class UserComponent implements OnInit {
     }
   }
 
-  // updateUser(): void {
-  //   if (this.editingUser) {
-  //     this.userService.updateUser(this.editingUser).subscribe(() => {
-  //       this.loadUsers();
-  //       this.editingUser = null;
-  //     });
-  //   }
-  // }
 
   deleteUser(id: number): void {
     this.userService.deleteUser(id).subscribe(() => this.loadUsers());
   }
-  // getUsers() {
-  //   this.http.get<User[]>(`${environment.baseUrl}/api/user`).subscribe(
-  //     {
-  //       next: result => this.users = result,
-  //       error: e => console.log(e)
-  //     }
-  //   )
-  // }
+
+  getUserAccounts(id: number) {
+    this.accountService.getAccountsByUserId(id).subscribe((accounts) => {
+      this.userAccounts = accounts,
+      this.selectedUser = this.users.find((user) => user.userId === id) || null;
+    });
+  }
 
 }

@@ -48,9 +48,35 @@
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.phoneNumber}}</td>
+                <button (click)="getUserAccounts(user.userId)">User Accounts</button>
                 <button (click)="editUser(user)">Edit</button>
                 <button (click)="deleteUser(user.userId)">Delete</button>
             </tr>
         }
     </tbody>
 </table>
+
+@if (userAccounts.length == 0) {
+  <h3>No Accounts for {{ selectedUser?.username }}</h3>
+  <h4>Register an Account Today!</h4>
+} @else if (userAccounts.length > 0) {
+  <h3>No Accounts for {{ selectedUser?.username }}</h3>
+  <table>
+    <thead>
+        <tr>
+            <th>Account ID</th>
+            <th>Account Number</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (account of userAccounts; track $index) {
+            <tr>
+                <td>{{account.accountId}}</td>
+                <td>{{account.accountNumber}}</td>
+                <td>{{account.balance}}</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
