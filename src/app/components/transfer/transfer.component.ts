@@ -18,6 +18,7 @@ export class TransferComponent implements OnInit{
   newTransaction: CreateTransactionDTO = { fromAccountId: 0, toAccountId: 0, amount: 0 };
   senderDetails: Account | null = null;
   receiverDetails: Account | null = null;
+  showAddTransactionForm: boolean = false; 
 
   constructor(
     private transactionService: TransactionService,
@@ -64,4 +65,9 @@ export class TransferComponent implements OnInit{
       this.receiverDetails = null;
     });
   }
+
+  toggleAddTransactionForm() {
+    this.showAddTransactionForm = !this.showAddTransactionForm;
+  }
+  
 }

@@ -1,10 +1,10 @@
 
-    <button class="nav-button"><a [routerLink]="['/users']">User Screen</a></button>
-    <button class="nav-button"><a [routerLink]="['/accounts']">Account Screen</a></button>
-    <button class="nav-button"><a [routerLink]="['/transfers']">transactions Screen</a></button>
+    <button class="button"><a [routerLink]="['/users']">User Screen</a></button>
+    <button class="button"><a [routerLink]="['/accounts']">Account Screen</a></button>
+    <button class="button"><a [routerLink]="['/transfers']">transactions Screen</a></button>
     @if (!authService.isLoggedIn()) {
-        <button><a routerLink="/login">Login</a></button>
-        <button><a routerLink="/register">Register</a></button>
+        <button class="button"><a routerLink="/login">Login</a></button>
+        <button class="button"><a routerLink="/register">Register</a></button>
         } @else {
-          <button><a (click)="authService.logout()">Logout</a></button>
+          <button class="button"><a (click)="authService.logout()">Logout</a></button>
         }

@@ -1,0 +1,73 @@
+/* General table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Table header styling */
+table thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+/* Alternating row colors for better readability */
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Row hover effect */
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button styles */
+table button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+
+table button:nth-of-type(1) {
+    background-color: #2196F3; /* Blue for "User Accounts" */
+}
+
+table button:nth-of-type(2) {
+    background-color: #FFC107; /* Yellow for "Edit" */
+}
+
+table button:nth-of-type(3) {
+    background-color: #F44336; /* Red for "Delete" */
+}
+
+/* Button hover effects */
+table button:hover {
+    opacity: 0.8;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    table button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}

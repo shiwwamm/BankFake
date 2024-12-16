@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
   public editingUser: User | null = null;
   public userAccounts: Account[] | null = null;
   public selectedUser: User | null = null;
+  showAddUserForm: boolean = false;
 
   constructor(private userService: UserService, private accountService: AccountService) {}
 
@@ -34,6 +35,7 @@ export class UserComponent implements OnInit {
     this.userService.addUser(this.newUser).subscribe(() => {
       this.loadUsers();
       this.newUser = { userId: 0, username: '', email: '', phoneNumber: '' };
+      this.showAddUserForm = false;
     });
   }
 
@@ -67,4 +69,7 @@ export class UserComponent implements OnInit {
     });
   }
 
+  toggleAddUserForm() {
+    this.showAddUserForm = !this.showAddUserForm;
+  }
 }

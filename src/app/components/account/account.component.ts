@@ -15,6 +15,7 @@ export class AccountComponent implements OnInit{
   newAccount: Account = { accountId: 0, userId: 0, accountNumber: '', balance: 0 };
   editingAccount: Account | null = null;
   userIds: number[] = [];
+  showAddAccountsForm: boolean = false;
 
   constructor(private accountService: AccountService) {}
 
@@ -56,6 +57,10 @@ export class AccountComponent implements OnInit{
 
   deleteAccount(id: number): void {
     this.accountService.deleteAccount(id).subscribe(() => this.loadAccounts());
+  }
+
+  toggleAddAccountForm() {
+    this.showAddAccountsForm = !this.showAddAccountsForm;
   }
 
 }

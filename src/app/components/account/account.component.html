@@ -1,21 +1,25 @@
 <div>
 	<h2>Account Management</h2>
   
+
+	<button class="button add-account-button" (click)="toggleAddAccountForm()">Add Account</button>
+
 	<!-- Add Account Form -->
+	@if(showAddAccountsForm) {
 	<form (ngSubmit)="addAccount()">
 	  <!-- <input [(ngModel)]="newAccount.userId" name="userId" placeholder="User ID" required /> -->
 	  <label for="userId">User Id:</label>
-	  <select [(ngModel)]="newAccount.userId" name="userId" required>
+	  <select [(ngModel)]="newAccount.userId" name="userId" class="dropdown" required>
 		@for (id of userIds; track $index) {
 		<option [value]="id">{{ id }}</option>
 		}
 	  </select>
-
 	  <input [(ngModel)]="newAccount.accountNumber" name="accountNumber" placeholder="Account Number" required />
 	  <input [(ngModel)]="newAccount.balance" name="balance" placeholder="Balance" type="number" required />
 	  <button type="submit">Add Account</button>
 	</form>
-  
+	}
+	
 	<!-- Edit Account Form -->
 	 @if (editingAccount) {
 		<div>

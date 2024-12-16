@@ -1,0 +1,44 @@
+/* General Dropdown Styles */
+.dropdown {
+	display: inline-block;
+	width: 100%; /* Adjust to desired width */
+	max-width: 300px; /* Optional: to limit max size */
+	padding: 10px 15px;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	color: #333; /* Text color */
+	background-color: #f9f9f9; /* Background color */
+	border: 1px solid #ccc; /* Border */
+	border-radius: 5px; /* Rounded corners */
+	cursor: pointer;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover Effect */
+  .dropdown:hover {
+	border-color: #007bff; /* Border color on hover */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Focus Effect */
+  .dropdown:focus {
+	outline: none;
+	border-color: #0056b3; /* Border color when focused */
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Disabled State */
+  .dropdown:disabled {
+	background-color: #e9ecef; /* Light gray background */
+	color: #6c757d; /* Gray text color */
+	cursor: not-allowed;
+	border-color: #ddd; /* Lighter border */
+  }
+  
+  /* Option Styles */
+  .dropdown option {
+	font-size: 16px;
+	padding: 5px;
+  }
+  

@@ -1,7 +1,10 @@
 <div>
 	<h2>Transaction Management</h2>
   
+
+	<button class="button add-transaction-button" (click)="toggleAddTransactionForm()">Add Transaction</button>
 	<!-- Add Transaction Form -->
+	 @if(showAddTransactionForm) {
 	<form (ngSubmit)="addTransaction()">
 	  <label for="fromAccountId">Sender</label>
 	  <select
@@ -54,8 +57,9 @@
 		required
 	  />
   
-	  <button type="submit">Make Transaction</button>
+	  <button class='button' type="submit">Make Transaction</button>
 	</form>
+}
   
 	<!-- Transaction List -->
 	<h3>All Transactions</h3>

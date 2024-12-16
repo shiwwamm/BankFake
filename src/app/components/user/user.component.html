@@ -2,12 +2,16 @@
     <h2>User Management</h2>
   
     <!-- Add User Form -->
+    <button class="button add-user-button" (click)="toggleAddUserForm()">Add User</button>
+     @if(showAddUserForm) {
     <form (ngSubmit)="addUser()">
       <input [(ngModel)]="newUser.username" name="name" placeholder="Name" required />
       <input [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
       <input [(ngModel)]="newUser.phoneNumber" name="phone" placeholder="Phone" required />
-      <button type="submit">Add User</button>
+      <button type="submit" class="button">Add User</button>
+      <button type="button" class="button cancel-button" (click)="toggleAddUserForm()">Cancel</button>
     </form>
+  }
   
     <!-- Edit User Form -->
      @if (editingUser) {
@@ -18,19 +22,11 @@
         <input [(ngModel)]="editingUser.email" name="email" placeholder="Email" required />
         <input [(ngModel)]="editingUser.phoneNumber" name="phone" placeholder="Phone" required />
         <button type="submit">Update User</button>
-        <button type="button" (click)="editingUser = null">Cancel</button>
+        <button type="button" class="button" (click)="editingUser = null">Cancel</button>
       </form>
     </div>
     }
   
-    <!-- User List -->
-    <!-- <ul>
-      <li *ngFor="let user of users">
-        {{ user.name }} - {{ user.email }} - {{ user.phone }}
-        <button (click)="editUser(user)">Edit</button>
-        <button (click)="deleteUser(user.id)">Delete</button>
-      </li>
-    </ul> -->
   </div>
 <table>
     <thead>
@@ -80,6 +76,6 @@
           }
       </tbody>
   </table>
-  <button type="button" (click)="userAccounts = null">Close Accounts View</button>
+  <button type="button" class="button" (click)="userAccounts = null">Close Accounts View</button>
   }
 }
