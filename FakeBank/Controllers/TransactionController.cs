@@ -36,6 +36,45 @@ namespace FakeBank.Controllers
             return Ok(transactions);
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetTransactionByUserId(int userId)
+        {
+            var userAccountIds = await _context.Accounts
+                .Where(a => a.UserId == userId)
+                .Select(a => a.AccountId)
+                .ToListAsync();
+
+            if (!userAccountIds.Any()) { return Ok(new List<TransactionDTO>()); }
+
+            var transactions = await _context.Transactions
+                .Where(t => userAccountIds.Contains(t.ToAccountId) || userAccountIds.Contains(t.FromAccountId))
+                .Select(t => new TransactionDTO
+                {
+                    TransactionId = t.TransactionId,
+                    Amount = t.Amount,
+                    FromAccountId = t.FromAccountId,
+                    ToAccountId = t.ToAccountId
+                })
+                .ToListAsync();
+            return Ok(transactions);
+        }
+
+        [HttpGet("account/{accountId}")]
+        public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetTransactionByAccount(int accountId)
+        {
+            var transactions = await _context.Transactions
+                .Where(t => t.FromAccountId == accountId || t.ToAccountId == accountId)
+                .Select(t => new TransactionDTO
+                {
+                    TransactionId = t.TransactionId,
+                    Amount = t.Amount,
+                    FromAccountId = t.FromAccountId,
+                    ToAccountId = t.ToAccountId
+                })
+                .ToListAsync();
+            return Ok(transactions);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<TransactionDTO>> PostTransaction(CreateTransactionDTO createTransactionDto)
@@ -92,6 +131,22 @@ namespace FakeBank.Controllers
                 _logger.LogError(ex, "An error occurred while processing the transaction.");
                 return StatusCode(500, "An error occurred while processing the transaction.");
             }
+        }
+        
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteTransaction(int id)
+        {
+            var transaction = await _context.Transactions.FindAsync(id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            _context.Transactions.Remove(transaction);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
