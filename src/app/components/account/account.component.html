@@ -64,6 +64,7 @@
 	<table>
 		<thead>
 			<tr>
+				<th>Account ID</th>
 				<th>User ID</th>
 				<th>Account Number</th>
 				<th>Balance</th>
@@ -72,6 +73,7 @@
 		<tbody>
 			@for (account of accounts; track $index) {
 				<tr>
+					<td>{{account.accountId}}</td>
 					<td>{{account.userId}}</td>
 					<td>{{account.accountNumber}}</td>
 					<td>${{account.balance}}</td>
