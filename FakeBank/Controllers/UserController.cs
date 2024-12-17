@@ -20,7 +20,6 @@ namespace FakeBank.Controllers
 
 
         [HttpGet]
-        //[Authorize]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var users = await _context.Users.Select(u => new UserDTO
@@ -61,6 +60,7 @@ namespace FakeBank.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<UserDTO>> PostUser(CreateUserDTO createUserDto)
         {
             var user = new User
@@ -85,6 +85,7 @@ namespace FakeBank.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutUser(int id, UpdateUserDTO updateUserDto)
         {
             var user = await _context.Users.FindAsync(id);
@@ -119,6 +120,7 @@ namespace FakeBank.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);

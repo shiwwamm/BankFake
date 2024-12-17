@@ -182,3 +182,5 @@ C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\bin\Debug\net8.0\Microsoft
 C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\obj\Debug\net8.0\FakeBank.sourcelink.json
+C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\bin\Debug\net8.0\appsettings.Production.json
+C:\Users\pk401440\Desktop\Developer\FakeBank\FakeBank\bin\Debug\net8.0\appsettings.Production.Development.json

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FakeBankDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("FakeBankConnection"))
 );
 
-builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"))
+builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("FakeBankConnection"))
 );
 
 builder.Services.AddAuthorization();

@@ -18,7 +18,7 @@ namespace DataModel
             if (optionsBuilder.IsConfigured) { return; }
             IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
             IConfigurationRoot configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("AuthConnection"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("FakeBankConnection"));
         }
     }
 }

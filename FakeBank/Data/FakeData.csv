@@ -1,4 +1,4 @@
-account_id,user_id,username,email,phone_number,account_number,balance
+Account_id,User_id,Username,Email,Phone_number,Account_number,Balance
 1,1,orrgato,orrgato@gmail.com,9876789876,12345,10000
 7,1,orrgato,orrgato@gmail.com,9876789876,54321,9999
 2,2,shayy,shay@yayay.yay,1232321456,98789,5000
