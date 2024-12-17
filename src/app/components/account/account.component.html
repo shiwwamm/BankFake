@@ -1,47 +1,86 @@
-<div>
+<!-- <div> -->
 	<h2>Account Management</h2>
-  
 
 	<button class="button add-account-button" (click)="toggleAddAccountForm()">Add Account</button>
 
 	<!-- Add Account Form -->
 	@if(showAddAccountsForm) {
 	<form (ngSubmit)="addAccount()">
-	  <!-- <input [(ngModel)]="newAccount.userId" name="userId" placeholder="User ID" required /> -->
-	  <label for="userId">User Id:</label>
-	  <select [(ngModel)]="newAccount.userId" name="userId" class="dropdown" required>
-		@for (id of userIds; track $index) {
-		<option [value]="id">{{ id }}</option>
+	  <div class="form-group">
+		<label for="userId">User Id:</label>
+		<select [(ngModel)]="newAccount.userId" name="userId" class="dropdown" required #userId="ngModel">
+		  @for (user of usersWithNames; track $index) {
+			<option [value]="user.id">{{ user.id }} || Username: {{user.username}} </option>
+			}
+		</select>
+	  </div>
+	  <div class="form-group">
+		<label for="accountNumber">Account Number:</label>
+		<input [(ngModel)]="newAccount.accountNumber" name="accountNumber" placeholder="Account Number" required #accountNumber="ngModel" pattern="^[0-9]{5}$"/>
+		@if (accountNumber.invalid && (accountNumber.dirty || accountNumber.touched)) {
+			<div class="error-message">
+				Account Number is required.
+			</div>
 		}
-	  </select>
-	  <input [(ngModel)]="newAccount.accountNumber" name="accountNumber" placeholder="Account Number" required />
-	  <input [(ngModel)]="newAccount.balance" name="balance" placeholder="Balance" type="number" required />
-	  <button type="submit">Add Account</button>
+	  </div>
+	  <div class="form-group">
+		<label for="balance">Balance:</label>
+		<input [(ngModel)]="newAccount.balance" name="balance" placeholder="Balance" type="number" required min="0" #balance="ngModel"/>
+		@if (balance.invalid && (balance.dirty || balance.touched)) {
+			<div class="error-message">
+				Balance is required and should be a valid number.
+			</div>
+		}
+	  </div>
+	  <button type="submit" [disabled]="userId.invalid || userId.value === 0|| balance.invalid || accountNumber.invalid" class="button">Add Account</button>
+	  <button type="button" class="button cancel-button" (click)="showAddAccountsForm = false">Cancel</button>
 	</form>
 	}
+
 	
 	<!-- Edit Account Form -->
 	 @if (editingAccount) {
 		<div>
 		<h3>Edit Account</h3>
 		<form (ngSubmit)="updateAccount()">
+			<div class="form-group">
+			<label for="balance">User ID:</label>
 			<input [(ngModel)]="editingAccount.userId" name="userId" placeholder="User ID" required />
+			</div>
+			<div class="form-group">
+			<label for="accountNumber">Account Number:</label>
 			<input [(ngModel)]="editingAccount.accountNumber" name="accountNumber" placeholder="Account Number" required />
-			<input [(ngModel)]="editingAccount.balance" name="balance" placeholder="Balance" type="number" required />
-			<button type="submit">Update Account</button>
-			<button type="button" (click)="editingAccount = null">Cancel</button>
+			</div>
+			<div class="form-group">
+			<label for="balance">Balance:</label>
+			<input [(ngModel)]="editingAccount.balance" name="balance" placeholder="Balance" type="number" min="0" required />
+			</div>
+			<button type="submit" class="button">Update Account</button>
+			<button type="button" class="button cancel-button" (click)="editingAccount = null">Cancel</button>
 		</form>
 		</div>
 	}
-  
-	<!-- Account List -->
-	<ul>
-		@for (account of accounts; track $index) {
-	  <li>
-		User ID: {{ account.userId }}, Account Number: {{ account.accountNumber }}, Balance: {{ account.balance }}
-		<button (click)="editAccount(account)">Edit</button>
-		<button (click)="deleteAccount(account.accountId)">Delete</button>
-	  </li>
-	}
-	</ul>
-  </div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>User ID</th>
+				<th>Account Number</th>
+				<th>Balance</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (account of accounts; track $index) {
+				<tr>
+					<td>{{account.userId}}</td>
+					<td>{{account.accountNumber}}</td>
+					<td>${{account.balance}}</td>
+					<!-- <button (click)="getUserAccounts(account.userId)">User Accounts</button> -->
+					<button (click)="editAccount(account)">Edit</button>
+					<button (click)="deleteAccount(account.accountId)">Delete</button>
+				</tr>
+			}
+		</tbody>
+	</table>
+	
+  <!-- </div> -->

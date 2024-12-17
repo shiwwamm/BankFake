@@ -1,75 +1,133 @@
-<div>
+
 	<h2>Transaction Management</h2>
   
 
 	<button class="button add-transaction-button" (click)="toggleAddTransactionForm()">Add Transaction</button>
 	<!-- Add Transaction Form -->
-	 @if(showAddTransactionForm) {
-	<form (ngSubmit)="addTransaction()">
-	  <label for="fromAccountId">Sender</label>
-	  <select
-		id="fromAccountId"
-		[(ngModel)]="newTransaction.fromAccountId"
-		name="fromAccountId"
-		(change)="onSenderChange(newTransaction.fromAccountId)"
-		required
-	  >
-		@for (account of accounts; track $index) {
-		<option [value]="account.accountId">
-		  {{ account.accountNumber }}
-		</option>
-		}
-	</select>
-	  @if (senderDetails) {
-	  <div>
-		<p>Sender id: {{ senderDetails.userId }}</p>
-		<p>Sender Balance: {{ senderDetails.balance }}</p>
-	  </div>
-	}
-  
-	  <label for="toAccountId">Receiver</label>
-	  <select
-		id="toAccountId"
-		[(ngModel)]="newTransaction.toAccountId"
-		name="toAccountId"
-		(change)="onReceiverChange(newTransaction.toAccountId)"
-		required
-	  >
-	  @for (account of accounts; track $index) {
-		<option [value]="account.accountId">
-		  {{ account.accountNumber }}
-		</option>
-	}
-	  </select>
-	  @if (receiverDetails) {
-	  <div>
-		<p>Receiver id: {{ receiverDetails.userId }}</p>
-		<p>Receiver Balance: {{ receiverDetails.balance }}</p>
-	  </div>
-	}
-  
-	  <label for="amount">Amount</label>
-	  <input
-		id="amount"
-		type="number"
-		[(ngModel)]="newTransaction.amount"
-		name="amount"
-		required
-	  />
-  
-	  <button class='button' type="submit">Make Transaction</button>
-	</form>
-}
+	@if(showAddTransactionForm) {
+		<form (ngSubmit)="addTransaction()" class="form-inline">
+		  <!-- <div class="form-group">
+			<label for="fromAccountId">Sender:</label>
+			<select
+			  id="fromAccountId"
+			  class="dropdown"
+			  [(ngModel)]="newTransaction.fromAccountId"
+			  name="fromAccountId"
+			  (change)="onSenderChange(newTransaction.fromAccountId)"
+			  required
+			>
+			  @for (account of accounts; track $index) {
+			  <option [value]="account.accountId">
+				Account Number: {{ account.accountNumber }}
+			  </option>
+			  }
+			</select>
+		  </div>
+		  @if (senderDetails) {
+		  <div class="details">
+			<p>Sender User id: {{ senderDetails.userId }}</p>
+			<p>Sender Balance: {{ senderDetails.balance }}</p>
+		  </div>
+		  } -->
+
+		  <div class="form-group">
+			<label for="fromAccountId">Sender:</label>
+			<select
+			  id="fromAccountId"
+			  class="dropdown"
+			  [(ngModel)]="newTransaction.fromAccountId"
+			  name="fromAccountId"
+			  (change)="onSenderChange(newTransaction.fromAccountId)"
+			  required
+			  #senderId="ngModel"
+			>
+			  @for (account of accounts; track $index) {
+			  <option [value]="account.accountId">
+				Account Number: {{ account.accountNumber }}
+			  </option>
+			  }
+			</select>
+		  
+			@if (senderDetails) {
+			<div class="details-inline">
+			  <span>Sender User id: {{ senderDetails.userId }}</span>
+			  <span>Sender Balance: {{ senderDetails.balance }}</span>
+			</div>
+			}
+		  </div>
+		  <p></p>
+		  <div class="form-group">
+			<label for="toAccountId">Receiver:</label>
+			<select
+			  id="toAccountId"
+			  class="dropdown"
+			  [(ngModel)]="newTransaction.toAccountId"
+			  name="toAccountId"
+			  (change)="onReceiverChange(newTransaction.toAccountId)"
+			  required
+			  #receiverId="ngModel"
+			>
+			  @for (account of accounts; track $index) {
+			  <option [value]="account.accountId">
+				Account Number: {{ account.accountNumber }}
+			  </option>
+			  }
+			</select>
+		  
+			@if (receiverDetails) {
+			<div class="details-inline">
+			  <span>Receiver User id: {{ receiverDetails.userId }}</span>
+			  <span>Receiver Balance: {{ receiverDetails.balance }}</span>
+			</div>
+			}
+		  </div>
+	  
+		  <div class="form-group">
+			<label for="amount">Amount:</label>
+			<input
+			  id="amount"
+			  type="number"
+			  [(ngModel)]="newTransaction.amount"
+			  name="amount"
+			  required
+			  #amount="ngModel" 
+			  min="1"
+
+			/>
+		  </div>
+	  
+		  <button class="button" [disabled]="senderId.value === 0 || receiverId.value === 0 || amount.invalid" type="submit">Make Transaction</button>
+		</form>
+	  }
+	  <hr>
   
 	<!-- Transaction List -->
 	<h3>All Transactions</h3>
-	<ul>
-		@for (transaction of transactions; track $index) {
-	  <li>
-		Transaction ID: {{ transaction.transactionId }}, From: {{ transaction.fromAccountId }},
-		To: {{ transaction.toAccountId }}, Amount: {{ transaction.amount }}
-	  </li>
-	}
-	</ul>
-  </div>
-  
+	<table>
+		<thead>
+			<tr>
+				<th>Transaction ID</th>
+				<th>Sender ID</th>
+				<th>Sender Username</th>
+				<th>Sender Account Number</th>
+				<th>Receiver ID</th>
+				<th>Receiver Username</th>
+				<th>Receiver Account Number</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (detail of transactionsDetails; track $index) {
+				<tr>
+					<td>{{ detail.transactionId }}</td>
+					<td>{{ detail.fromUserId }}</td>
+					<td>{{ detail.fromUsername}}</td>
+					<td>{{ detail.fromAccountNumber }}</td>
+					<td>{{ detail.toUserId }}</td>
+					<td>{{ detail.toUsername }}</td>
+					<td>{{ detail.toAccountNumber }}</td>
+					<td>${{ detail.amount }}</td>
+				</tr>
+			}
+		</tbody>
+	</table>

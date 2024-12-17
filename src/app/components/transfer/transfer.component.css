@@ -1,0 +1,134 @@
+button:disabled {
+  background-color: #ccc; /* Light grey background */
+  color: #777; /* Dark grey text */
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+  border: 1px solid #ddd; /* Light grey border */
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between dropdown and details */
+}
+
+.dropdown {
+  width: 220px; /* Ensure dropdown does not take full width */
+  padding: 5px;
+}
+
+.details-inline {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #555; /* Optional: Styling for receiver details */
+}
+
+.details-inline span {
+  margin-left: 10px; /* Small space between label and data */
+}
+  
+  .form-group label {
+    width: 120px; 
+    text-align: right;
+    margin-right: 10px; 
+  }
+  .form-group input {
+    width: 500px; 
+    padding: 5px; 
+    font-size: 14px;
+  }
+
+  .details {
+	margin-left: 150px; /* Indent details below the corresponding field */
+	font-size: 14px;
+	color: #555; /* Optional: style for details */
+  }
+
+  .dropdown {
+	display: inline-block;
+	width: 100%; /* Adjust to desired width */
+	max-width: 300px; /* Optional: to limit max size */
+	padding: 10px 15px;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	color: #333; /* Text color */
+	background-color: #f9f9f9; /* Background color */
+	border: 1px solid #ccc; /* Border */
+	border-radius: 5px; /* Rounded corners */
+	cursor: pointer;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover Effect */
+  .dropdown:hover {
+	border-color: #007bff; /* Border color on hover */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Focus Effect */
+  .dropdown:focus {
+	outline: none;
+	border-color: #0056b3; /* Border color when focused */
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Disabled State */
+  .dropdown:disabled {
+	background-color: #e9ecef; /* Light gray background */
+	color: #6c757d; /* Gray text color */
+	cursor: not-allowed;
+	border-color: #ddd; /* Lighter border */
+  }
+  
+  /* Option Styles */
+  .dropdown option {
+	font-size: 16px;
+	padding: 5px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Table header styling */
+table thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+/* Alternating row colors for better readability */
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Row hover effect */
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Responsive table */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    table button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}

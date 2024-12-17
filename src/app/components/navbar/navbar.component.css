@@ -8,3 +8,7 @@
     cursor: pointer;
     border-radius: 8px;
 }
+a {
+text-decoration: none !important;
+color: white;
+}

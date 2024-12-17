@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/accounts';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-user',
@@ -21,7 +22,11 @@ export class UserComponent implements OnInit {
   public selectedUser: User | null = null;
   showAddUserForm: boolean = false;
 
-  constructor(private userService: UserService, private accountService: AccountService) {}
+  constructor(
+    private userService: UserService, 
+    private accountService: AccountService, 
+    private transactionService: TransactionService
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -32,11 +37,14 @@ export class UserComponent implements OnInit {
   }
 
   addUser(): void {
-    this.userService.addUser(this.newUser).subscribe(() => {
-      this.loadUsers();
-      this.newUser = { userId: 0, username: '', email: '', phoneNumber: '' };
-      this.showAddUserForm = false;
-    });
+    if (this.newUser.username && this.newUser.email && this.newUser.phoneNumber) {
+      this.userService.addUser(this.newUser).subscribe(() => {
+        this.loadUsers();
+        this.newUser = { userId: 0, username: '', email: '', phoneNumber: '' };
+        this.showAddUserForm = false;
+      });
+    }
+    
   }
 
   editUser(user: User): void {
@@ -58,8 +66,41 @@ export class UserComponent implements OnInit {
   }
 
 
-  deleteUser(id: number): void {
-    this.userService.deleteUser(id).subscribe(() => this.loadUsers());
+
+  deleteUser(userId: number): void {
+    this.transactionService.getTransactionsByUserId(userId).subscribe(transactions => {
+      if (transactions.length > 0) {
+        transactions.forEach(transaction => {
+          this.transactionService.deleteTransaction(transaction.transactionId).subscribe();
+        });
+      }
+  
+      this.accountService.getAccountsByUserId(userId).subscribe(accounts => {
+        if (accounts.length > 0) {
+          accounts.forEach(account => {
+            this.accountService.deleteAccount(account.accountId).subscribe();
+          });
+        }
+
+        this.userService.deleteUser(userId).subscribe(() => {
+          this.loadUsers();
+        });
+      });
+    });
+  }
+
+  deleteAccount(userId:number, accountId: number): void {
+    this.transactionService.getTransactionsByAccountId(accountId).subscribe(transactions => {
+      if (transactions.length > 0) {
+        transactions.forEach(transaction => {
+          this.transactionService.deleteTransaction(transaction.transactionId).subscribe();
+        });
+      }
+  
+      this.accountService.deleteAccount(accountId).subscribe(() => {
+        this.getUserAccounts(userId);
+      });
+    });
   }
 
   getUserAccounts(id: number) {

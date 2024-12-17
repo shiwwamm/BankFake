@@ -18,4 +18,16 @@ export class TransactionService {
   addTransaction(transaction: CreateTransactionDTO): Observable<TransactionDTO> {
     return this.http.post<TransactionDTO>(`${environment.baseUrl}/api/transaction`, transaction);
   }
+
+  deleteTransaction(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/api/transaction/${id}`);
+  }
+
+  getTransactionsByUserId(userId: number): Observable<TransactionDTO[]> {
+    return this.http.get<TransactionDTO[]>(`${environment.baseUrl}/api/transaction/user/${userId}`);
+  }
+
+  getTransactionsByAccountId(accountId: number): Observable<TransactionDTO[]> {
+    return this.http.get<TransactionDTO[]>(`${environment.baseUrl}/api/transaction/account/${accountId}`);
+  }
 }

@@ -1,4 +1,38 @@
 /* General table styling */
+  
+button:disabled {
+    background-color: #ccc; /* Light grey background */
+    color: #777; /* Dark grey text */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    border: 1px solid #ddd; /* Light grey border */
+  }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+  }
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-right: 15px; 
+  }
+  
+  .form-group label {
+    width: 120px; 
+    text-align: right;
+    margin-right: 10px; 
+  }
+  .form-group input {
+    width: 500px; 
+    padding: 5px; 
+    font-size: 14px;
+  }
+  
+
+.cancel-button {
+    background-color: #F44336 !important; 
+}
 table {
     width: 100%;
     border-collapse: collapse;

@@ -10,3 +10,14 @@ export interface TransactionDTO {
 	fromAccountId: number;
 	toAccountId: number;
   }
+
+  export interface TransactionDetailsDTO {
+	transactionId: number;
+	amount: number;
+    fromAccountNumber: string;
+    fromUsername: string;
+    fromUserId: number;
+    toAccountNumber: string;
+    toUsername: string;
+    toUserId: number;
+  }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateTransactionDTO, TransactionDTO } from '../../models/transaction';
+import { CreateTransactionDTO, TransactionDTO, TransactionDetailsDTO } from '../../models/transaction';
 import { Account } from '../../models/accounts';
 import { AccountService } from '../../services/account.service';
 import { TransactionService } from '../../services/transaction.service';
 import { FormsModule } from '@angular/forms';
+import { forkJoin, of, switchMap } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-transfer',
@@ -19,19 +21,23 @@ export class TransferComponent implements OnInit{
   senderDetails: Account | null = null;
   receiverDetails: Account | null = null;
   showAddTransactionForm: boolean = false; 
+  transactionsDetails: TransactionDetailsDTO[] = [];
 
   constructor(
     private transactionService: TransactionService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.loadTransactions();
+    // this.loadTransactions();
     this.loadAccounts();
+    this.loadTransactionDetails();
+    
   }
-  loadTransactions(): void {
-    this.transactionService.getTransactions().subscribe((data) => (this.transactions = data));
-  }
+  // loadTransactions(): void {
+  //   this.transactionService.getTransactions().subscribe((data) => (this.transactions = data));
+  // }
 
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe((data) => (this.accounts = data));
@@ -59,7 +65,7 @@ export class TransferComponent implements OnInit{
 
   addTransaction(): void {
     this.transactionService.addTransaction(this.newTransaction).subscribe(() => {
-      this.loadTransactions();
+      this.loadTransactionDetails();
       this.newTransaction = { fromAccountId: 0, toAccountId: 0, amount: 0 };
       this.senderDetails = null;
       this.receiverDetails = null;
@@ -68,6 +74,41 @@ export class TransferComponent implements OnInit{
 
   toggleAddTransactionForm() {
     this.showAddTransactionForm = !this.showAddTransactionForm;
+  }
+  
+
+  loadTransactionDetails(): void {
+    this.transactionService.getTransactions().pipe(
+      switchMap(transactions => {
+        const transactionObservables = transactions.map(transaction => {
+          return forkJoin({
+            transaction: of(transaction),
+            fromAccount: this.accountService.getAccountById(transaction.fromAccountId),
+            toAccount: this.accountService.getAccountById(transaction.toAccountId),
+            fromUser: this.accountService.getAccountById(transaction.fromAccountId).pipe(
+              switchMap(account => this.userService.getUserById(account.userId))
+            ),
+            toUser: this.accountService.getAccountById(transaction.toAccountId).pipe(
+              switchMap(account => this.userService.getUserById(account.userId))
+            ),
+          });
+        });
+        return forkJoin(transactionObservables); 
+      })
+    ).subscribe((result) => {
+      this.transactionsDetails = result.map((res) => {
+        return {
+          transactionId: res.transaction.transactionId,
+          amount: res.transaction.amount,
+          fromAccountNumber: res.fromAccount.accountNumber,
+          fromUsername: res.fromUser.username,
+          fromUserId: res.fromUser.userId,
+          toAccountNumber: res.toAccount.accountNumber,
+          toUsername: res.toUser.username,
+          toUserId: res.toUser.userId,
+        } as TransactionDetailsDTO;
+      });
+    });
   }
   
 }
